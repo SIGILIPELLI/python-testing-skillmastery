@@ -1,0 +1,3010 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A structured, module-wise software testing training program using Python — manual QA fundamentals through advanced test automation.">
+      
+      
+      
+        <link rel="canonical" href="https://sigilipelli.github.io/python-testing-mastery-path/level-1/07-pytest-fundamentals/">
+      
+      
+        <link rel="prev" href="../06-python-setup/">
+      
+      
+        <link rel="next" href="../08-fixtures-parametrize/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>07 · pytest Fundamentals - Python Testing Mastery Path</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Python Testing Mastery Path">
+  <meta property="og:title" content="07 · pytest Fundamentals">
+  <meta property="og:description" content="A structured, module-wise software testing training program using Python — manual QA fundamentals, pytest, Selenium and automation, from entry level to master level.">
+  <meta property="og:url" content="https://sigilipelli.github.io/python-testing-mastery-path/level-1/07-pytest-fundamentals/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="07 · pytest Fundamentals">
+  <meta name="twitter:description" content="A structured, module-wise software testing training program using Python — manual QA fundamentals, pytest, Selenium and automation, from entry level to master level.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9440969811959397"
+     crossorigin="anonymous"></script>
+
+  <!-- Mastery Path premium gate: homepage + Level 1 stay free and crawlable;
+       Levels 2-4 require a signed-in account. -->
+  <script>
+    (function () {
+      if (!/\/level-[234]\//.test(window.location.pathname)) return;
+
+      var root = document.documentElement;
+      root.style.visibility = "hidden";
+
+      function reveal() { root.style.visibility = "visible"; }
+      function toLogin() {
+        window.location.replace(
+          "/login.html?redirect=" + encodeURIComponent(window.location.href)
+        );
+      }
+
+      var settled = false;
+      window.addEventListener("mastery-auth-ready", function (e) {
+        if (settled) return;
+        settled = true;
+        if (e.detail && e.detail.user) { reveal(); } else { toLogin(); }
+      }, { once: true });
+
+      // Fail closed: if Firebase never loads (blocked/offline), send to login
+      // rather than leaving a blank page or silently exposing the content.
+      setTimeout(function () {
+        if (!settled) { settled = true; toLogin(); }
+      }, 8000);
+    })();
+  </script>
+  <script type="module" src="/mastery-auth.js"></script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#07-pytest-fundamentals" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Python Testing Mastery Path" class="md-header__button md-logo" aria-label="Python Testing Mastery Path" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python Testing Mastery Path
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              07 · pytest Fundamentals
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SIGILIPELLI/python-testing-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    python-testing-mastery-path
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../privacy/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Privacy Policy
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 1 · Entry
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../level-2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 2 · Intermediate
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../level-3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 3 · Advanced
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../level-4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 4 · Master
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Python Testing Mastery Path" class="md-nav__button md-logo" aria-label="Python Testing Mastery Path" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Python Testing Mastery Path
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SIGILIPELLI/python-testing-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    python-testing-mastery-path
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../privacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Privacy Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 1 · Entry
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 1 · Entry
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-what-is-software-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · What Is Software Testing?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-test-case-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Test Case Design & Documentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-test-types-levels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Test Types & Levels
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-defect-lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Defect Lifecycle & Bug Reporting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-manual-testing-practice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Manual Testing in Practice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-python-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Python Setup for Testers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · pytest Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · pytest Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-your-first-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Your first test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-discovery-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Discovery rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-assertions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Assertions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Assertions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assertion-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assertion patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assertion-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assertion messages
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-testing-for-expected-exceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Testing for expected exceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-running-and-selecting-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Running and selecting tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Running and selecting tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags-you-will-use-daily" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags you will use daily
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-markers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Markers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-test-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Test outcomes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-test-structure-arrange-act-assert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Test structure — Arrange, Act, Assert
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Test structure — Arrange, Act, Assert">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naming-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-first-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The FIRST properties
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-fixtures-parametrize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · pytest Fixtures & Parametrize
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-selenium-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Selenium WebDriver Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-project-test-suite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Test Plan + Automated Suite
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../level-2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 2 · Intermediate
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 2 · Intermediate
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/01-page-object-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Page Object Model in Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/02-selenium-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Selenium Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/03-api-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · API Testing with requests + pytest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/04-mocking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Mocking with unittest.mock
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/05-test-data-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Test Data Management & Factories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/06-pytest-config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · pytest Plugins & Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/07-reporting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Reporting (pytest-html, Allure)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/08-parallel-execution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Parallel Execution (pytest-xdist)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/09-cross-browser-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Cross-Browser Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/10-project-pom-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — POM Framework with API Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../level-3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 3 · Advanced
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 3 · Advanced
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/01-playwright/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Playwright for Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/02-bdd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · BDD with pytest-bdd / Behave
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/03-robot-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Robot Framework Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/04-cicd-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · CI/CD Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/05-property-based-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Property-Based Testing with Hypothesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/06-performance-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Performance Testing with Locust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/07-mobile-testing-appium/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Mobile Testing with Appium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/08-database-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Database Testing from Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/09-flaky-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Flaky Test Diagnosis & Stabilization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/10-project-playwright-bdd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Playwright + BDD in CI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../level-4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 4 · Master
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 4 · Master
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/01-test-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Test Architecture at Scale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/02-shift-left-continuous-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Shift-Left & Continuous Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/03-contract-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Contract Testing (Pact)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/04-security-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Security Testing Basics for QA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/05-test-metrics-quality-gates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Test Metrics & Quality Gates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/06-containerized-environments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Containerized Test Environments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/07-ai-assisted-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · AI-Assisted Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/08-inhouse-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Building an In-House Test Framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/09-qa-leadership-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · QA Leadership & Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/10-capstone-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Capstone — Production-Grade Framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-your-first-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Your first test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-discovery-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Discovery rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-assertions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Assertions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Assertions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assertion-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assertion patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assertion-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assertion messages
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-testing-for-expected-exceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Testing for expected exceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-running-and-selecting-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Running and selecting tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Running and selecting tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags-you-will-use-daily" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags you will use daily
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-markers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Markers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-test-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Test outcomes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-test-structure-arrange-act-assert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Test structure — Arrange, Act, Assert
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Test structure — Arrange, Act, Assert">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naming-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-first-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The FIRST properties
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="07-pytest-fundamentals">07 · pytest Fundamentals<a class="headerlink" href="#07-pytest-fundamentals" title="Permanent link">&para;</a></h1>
+<p>pytest is the standard Python test framework. Its appeal is that a test is just
+a function with a plain <code>assert</code> — no class hierarchy, no <code>assertEqual</code>
+ceremony — while the failure output is more informative than either.</p>
+<h2 id="1-your-first-test">1. Your first test<a class="headerlink" href="#1-your-first-test" title="Permanent link">&para;</a></h2>
+<p>Create <code>tests/test_calculator.py</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_add_two_positive_numbers</span><span class="p">():</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">assert</span> <span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+</code></pre></div>
+<p>Run it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pytest<span class="w"> </span>tests/test_calculator.py
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>============================= test session starts ==============================
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>collected 1 item
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>tests/test_calculator.py::test_add_two_positive_numbers PASSED           [100%]
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>============================== 1 passed in 0.01s ===============================
+</code></pre></div>
+<p>That's the whole contract: a function whose name starts with <code>test_</code>, containing
+an <code>assert</code>.</p>
+<h2 id="2-discovery-rules">2. Discovery rules<a class="headerlink" href="#2-discovery-rules" title="Permanent link">&para;</a></h2>
+<p>pytest finds tests by convention. Get these wrong and your test silently doesn't
+run — which is worse than failing.</p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Files</td>
+<td><code>test_*.py</code> or <code>*_test.py</code></td>
+</tr>
+<tr>
+<td>Functions</td>
+<td><code>test_*</code></td>
+</tr>
+<tr>
+<td>Classes</td>
+<td><code>Test*</code> (and they must have <strong>no</strong> <code>__init__</code> method)</td>
+</tr>
+<tr>
+<td>Methods in those classes</td>
+<td><code>test_*</code></td>
+</tr>
+<tr>
+<td>Directories searched</td>
+<td><code>testpaths</code> in <code>pytest.ini</code>, else the current directory, recursively</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">TestShoppingCart</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Grouping related tests in a class is optional but keeps output readable.&quot;&quot;&quot;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">test_new_cart_is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        <span class="n">cart</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">cart</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">test_adding_item_increases_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        <span class="n">cart</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        <span class="n">cart</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;sku&quot;</span><span class="p">:</span> <span class="s2">&quot;SKU-101&quot;</span><span class="p">,</span> <span class="s2">&quot;qty&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">cart</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>tests/test_cart.py::TestShoppingCart::test_new_cart_is_empty PASSED       [ 50%]
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>tests/test_cart.py::TestShoppingCart::test_adding_item_increases_count PASSED [100%]
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">The silent-skip trap</p>
+<p>A file named <code>login_tests.py</code> or a function named <code>check_login</code> is collected
+by nothing and reported by nothing. A suite that reports <code>47 passed</code> when
+you wrote 52 tests is a suite lying to you. Always check the collected
+count: <code>pytest --collect-only -q</code>.</p>
+</div>
+<h2 id="3-assertions">3. Assertions<a class="headerlink" href="#3-assertions" title="Permanent link">&para;</a></h2>
+<p>pytest rewrites plain <code>assert</code> statements to show you the actual values on
+failure. This is its best feature.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_order_total_is_calculated_correctly</span><span class="p">():</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="n">subtotal</span> <span class="o">=</span> <span class="mi">1800</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="n">discount</span> <span class="o">=</span> <span class="mi">360</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="n">shipping</span> <span class="o">=</span> <span class="mi">30</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="k">assert</span> <span class="n">subtotal</span> <span class="o">-</span> <span class="n">discount</span> <span class="o">+</span> <span class="n">shipping</span> <span class="o">==</span> <span class="mi">1470</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>============================== 1 passed in 0.01s ===============================
+</code></pre></div>
+<p>Now break it deliberately — change the expected value to <code>1500</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>=================================== FAILURES ===================================
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>___________________ test_order_total_is_calculated_correctly ___________________
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    def test_order_total_is_calculated_correctly():
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>        subtotal = 1800
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>        discount = 360
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>        shipping = 30
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>&gt;       assert subtotal - discount + shipping == 1500
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>E       assert 1470 == 1500
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>E        +  where 1470 = ((1800 - 360) + 30)
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>tests/test_order.py:5: AssertionError
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>=========================== short test summary info ============================
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>FAILED tests/test_order.py::test_order_total_is_calculated_correctly - assert 1470 == 1500
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>============================== 1 failed in 0.02s ===============================
+</code></pre></div>
+<p>It shows the computed value <em>and</em> the sub-expression that produced it. No
+<code>print</code> statements required.</p>
+<h3 id="assertion-patterns">Assertion patterns<a class="headerlink" href="#assertion-patterns" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_assertion_styles</span><span class="p">():</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="c1"># equality</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="k">assert</span> <span class="s2">&quot;SAVE20&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;save20&quot;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="c1"># membership</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="k">assert</span> <span class="s2">&quot;shoes&quot;</span> <span class="ow">in</span> <span class="s2">&quot;trail running shoes&quot;</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    <span class="k">assert</span> <span class="mi">404</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">204</span><span class="p">]</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="c1"># truthiness — prefer explicit comparisons in tests</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    <span class="k">assert</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>          <span class="c1"># non-empty list is truthy</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    <span class="k">assert</span> <span class="ow">not</span> <span class="p">[]</span>             <span class="c1"># empty list is falsy</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="c1"># identity vs equality</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>    <span class="k">assert</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span>      <span class="c1"># correct for None</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>    <span class="k">assert</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>   <span class="c1"># correct for values</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>    <span class="c1"># collections</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>    <span class="k">assert</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}[</span><span class="s2">&quot;a&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>    <span class="k">assert</span> <span class="nb">sorted</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>    <span class="k">assert</span> <span class="nb">set</span><span class="p">([</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">set</span><span class="p">([</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">])</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>    <span class="c1"># floats — never use == on floats</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">pytest</span><span class="w"> </span><span class="kn">import</span> <span class="n">approx</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>    <span class="k">assert</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">==</span> <span class="n">approx</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>tests/test_assertions.py::test_assertion_styles PASSED                   [100%]
+</code></pre></div>
+<p><code>0.1 + 0.2 == 0.3</code> is <code>False</code> in floating-point arithmetic. <code>approx</code> is what
+you use for any monetary or measured value.</p>
+<h3 id="assertion-messages">Assertion messages<a class="headerlink" href="#assertion-messages" title="Permanent link">&para;</a></h3>
+<p>Add a message when the failure wouldn't be self-explanatory:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_response_time_within_sla</span><span class="p">():</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="n">response_time_ms</span> <span class="o">=</span> <span class="mi">2400</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="k">assert</span> <span class="n">response_time_ms</span> <span class="o">&lt;</span> <span class="mi">2000</span><span class="p">,</span> <span class="p">(</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>        <span class="sa">f</span><span class="s2">&quot;Search exceeded the 2000 ms SLA: took </span><span class="si">{</span><span class="n">response_time_ms</span><span class="si">}</span><span class="s2"> ms&quot;</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>E       AssertionError: Search exceeded the 2000 ms SLA: took 2400 ms
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>E       assert 2400 &lt; 2000
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">One logical assertion per test</p>
+<p>A test with eight unrelated asserts stops at the first failure and hides the
+other seven results. Multiple asserts that <em>together</em> verify one behaviour
+(status code + body + header of one response) are fine — that's one logical
+check.</p>
+</div>
+<h2 id="4-testing-for-expected-exceptions">4. Testing for expected exceptions<a class="headerlink" href="#4-testing-for-expected-exceptions" title="Permanent link">&para;</a></h2>
+<p>Negative testing in code form. <code>pytest.raises</code> asserts that something <em>does</em>
+fail, and fails the test if it doesn't.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">apply_promo</span><span class="p">(</span><span class="n">order_total</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    <span class="k">if</span> <span class="n">order_total</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">:</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Promo codes require a minimum order of 500&quot;</span><span class="p">)</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>    <span class="k">if</span> <span class="n">code</span> <span class="o">!=</span> <span class="s2">&quot;SAVE20&quot;</span><span class="p">:</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown promo code: </span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>    <span class="k">return</span> <span class="n">order_total</span> <span class="o">*</span> <span class="mf">0.8</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_promo_rejected_below_minimum_order</span><span class="p">():</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc_info</span><span class="p">:</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>        <span class="n">apply_promo</span><span class="p">(</span><span class="mi">499</span><span class="p">,</span> <span class="s2">&quot;SAVE20&quot;</span><span class="p">)</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>    <span class="k">assert</span> <span class="s2">&quot;minimum order of 500&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc_info</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_unknown_promo_code_raises_keyerror</span><span class="p">():</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;Unknown promo code&quot;</span><span class="p">):</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>        <span class="n">apply_promo</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s2">&quot;FAKECODE&quot;</span><span class="p">)</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_valid_promo_applies_discount</span><span class="p">():</span>
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>    <span class="k">assert</span> <span class="n">apply_promo</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s2">&quot;SAVE20&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">800.0</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>tests/test_promo.py::test_promo_rejected_below_minimum_order PASSED       [ 33%]
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>tests/test_promo.py::test_unknown_promo_code_raises_keyerror PASSED       [ 66%]
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>tests/test_promo.py::test_valid_promo_applies_discount PASSED             [100%]
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>============================== 3 passed in 0.02s ===============================
+</code></pre></div>
+<p>Always assert on the <em>message</em> as well as the type. <code>pytest.raises(ValueError)</code>
+alone will happily pass on a <code>ValueError</code> raised by a completely different bug.</p>
+<h2 id="5-running-and-selecting-tests">5. Running and selecting tests<a class="headerlink" href="#5-running-and-selecting-tests" title="Permanent link">&para;</a></h2>
+<p>This is where pytest earns its place in a QA workflow — you rarely want to run
+everything.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>pytest<span class="w">                                   </span><span class="c1"># everything under testpaths</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>pytest<span class="w"> </span>tests/test_cart.py<span class="w">                </span><span class="c1"># one file</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>pytest<span class="w"> </span>tests/test_cart.py::test_add_item<span class="w"> </span><span class="c1"># one test</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>pytest<span class="w"> </span>tests/api/<span class="w">                        </span><span class="c1"># one directory</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>pytest<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;promo&quot;</span><span class="w">                        </span><span class="c1"># name substring match</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>pytest<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;cart and not checkout&quot;</span><span class="w">        </span><span class="c1"># boolean expression on names</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>pytest<span class="w"> </span>-m<span class="w"> </span>smoke<span class="w">                          </span><span class="c1"># by marker</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;smoke or api&quot;</span><span class="w">                 </span><span class="c1"># markers combined</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>pytest<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;promo&quot;</span><span class="w"> </span>-v
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>collected 12 items / 9 deselected / 3 selected
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>tests/test_promo.py::test_promo_rejected_below_minimum_order PASSED       [ 33%]
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>tests/test_promo.py::test_unknown_promo_code_raises_keyerror PASSED       [ 66%]
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>tests/test_promo.py::test_valid_promo_applies_discount PASSED             [100%]
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>======================= 3 passed, 9 deselected in 0.03s ========================
+</code></pre></div>
+<h3 id="flags-you-will-use-daily">Flags you will use daily<a class="headerlink" href="#flags-you-will-use-daily" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-v</code></td>
+<td>Verbose — one line per test with its name</td>
+</tr>
+<tr>
+<td><code>-q</code></td>
+<td>Quiet — dots only</td>
+</tr>
+<tr>
+<td><code>-x</code></td>
+<td>Stop at the first failure</td>
+</tr>
+<tr>
+<td><code>--maxfail=3</code></td>
+<td>Stop after 3 failures</td>
+</tr>
+<tr>
+<td><code>-s</code></td>
+<td>Don't capture stdout — <code>print()</code> output appears live</td>
+</tr>
+<tr>
+<td><code>--lf</code></td>
+<td>Re-run only last-failed tests</td>
+</tr>
+<tr>
+<td><code>--ff</code></td>
+<td>Run last-failed first, then the rest</td>
+</tr>
+<tr>
+<td><code>--tb=short</code> / <code>--tb=line</code> / <code>--tb=no</code></td>
+<td>Traceback verbosity</td>
+</tr>
+<tr>
+<td><code>--collect-only</code></td>
+<td>List what <em>would</em> run without running it</td>
+</tr>
+<tr>
+<td><code>-r a</code></td>
+<td>Summary of all non-passing outcomes at the end</td>
+</tr>
+<tr>
+<td><code>--durations=10</code></td>
+<td>Show the 10 slowest tests</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>--lf</code> / <code>--ff</code> pair changes how debugging feels. Fix a failure, run
+<code>pytest --lf</code>, and you get a one-second feedback loop instead of a five-minute
+one.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>pytest<span class="w"> </span>--durations<span class="o">=</span><span class="m">3</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>============================= slowest 3 durations ==============================
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>2.31s call     tests/test_setup.py::test_network_access_to_test_api
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>0.02s call     tests/test_promo.py::test_valid_promo_applies_discount
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>0.01s setup    tests/test_cart.py::TestShoppingCart::test_new_cart_is_empty
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>============================== 12 passed in 2.41s ==============================
+</code></pre></div>
+<h2 id="6-markers">6. Markers<a class="headerlink" href="#6-markers" title="Permanent link">&para;</a></h2>
+<p>Markers tag tests so you can run subsets. Declare them in <code>pytest.ini</code>
+(Module 6), then apply them:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">smoke</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_homepage_loads</span><span class="p">():</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>    <span class="k">assert</span> <span class="kc">True</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">regression</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">ui</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_checkout_flow_end_to_end</span><span class="p">():</span>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>    <span class="k">assert</span> <span class="kc">True</span>
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Feature not implemented until release 2.15&quot;</span><span class="p">)</span>
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_wishlist_sharing</span><span class="p">():</span>
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>    <span class="k">assert</span> <span class="kc">False</span>
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a>
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span>
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a>    <span class="ow">not</span> <span class="nb">__import__</span><span class="p">(</span><span class="s2">&quot;os&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;RUN_SLOW_TESTS&quot;</span><span class="p">),</span>
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a>    <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Set RUN_SLOW_TESTS=1 to include slow tests&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="p">)</span>
+<a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_full_catalog_import</span><span class="p">():</span>
+<a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a>    <span class="k">assert</span> <span class="kc">True</span>
+<a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a>
+<a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a>
+<a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">xfail</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;BUG-118: promo rejected on sale items&quot;</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_promo_applies_to_sale_items</span><span class="p">():</span>
+<a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a>    <span class="k">assert</span> <span class="kc">False</span>  <span class="c1"># currently broken — tracked</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>pytest<span class="w"> </span>-v<span class="w"> </span>-r<span class="w"> </span>a
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>tests/test_markers.py::test_homepage_loads PASSED                        [ 20%]
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>tests/test_markers.py::test_checkout_flow_end_to_end PASSED              [ 40%]
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>tests/test_markers.py::test_wishlist_sharing SKIPPED (Feature not
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>  implemented until release 2.15)                                        [ 60%]
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>tests/test_markers.py::test_full_catalog_import SKIPPED (Set
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>  RUN_SLOW_TESTS=1 to include slow tests)                                [ 80%]
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>tests/test_markers.py::test_promo_applies_to_sale_items XFAIL (BUG-118:
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>  promo rejected on sale items)                                          [100%]
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>=========================== short test summary info ============================
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>SKIPPED [1] tests/test_markers.py:18: Feature not implemented until release 2.15
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>SKIPPED [1] tests/test_markers.py:23: Set RUN_SLOW_TESTS=1 to include slow tests
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>XFAIL tests/test_markers.py::test_promo_applies_to_sale_items - BUG-118: ...
+<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>=================== 2 passed, 2 skipped, 1 xfailed in 0.04s ====================
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Marker</th>
+<th>Use it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>skip</code></td>
+<td>The test can never run here (unimplemented feature, wrong OS)</td>
+</tr>
+<tr>
+<td><code>skipif(condition)</code></td>
+<td>Conditionally unrunnable (missing credentials, wrong browser)</td>
+</tr>
+<tr>
+<td><code>xfail</code></td>
+<td>The test <em>should</em> fail — a known, tracked bug</td>
+</tr>
+<tr>
+<td>Custom (<code>smoke</code>, <code>ui</code>, …)</td>
+<td>Grouping for selective runs</td>
+</tr>
+</tbody>
+</table>
+<p><code>xfail</code> with <code>strict=True</code> is the QA-relevant one: the test is expected to fail
+because of a known defect, and if it ever <em>passes</em>, pytest reports <code>XPASS</code> as a
+<strong>failure</strong> — telling you the bug got fixed and the marker should be removed.
+That closes the loop that "commented-out test" never does.</p>
+<h2 id="7-test-outcomes">7. Test outcomes<a class="headerlink" href="#7-test-outcomes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Outcome</th>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PASSED</td>
+<td><code>.</code></td>
+<td>Assertions held</td>
+</tr>
+<tr>
+<td>FAILED</td>
+<td><code>F</code></td>
+<td>An assertion failed</td>
+</tr>
+<tr>
+<td>ERROR</td>
+<td><code>E</code></td>
+<td>Something broke <em>outside</em> the test body — usually in a fixture</td>
+</tr>
+<tr>
+<td>SKIPPED</td>
+<td><code>s</code></td>
+<td>Deliberately not run</td>
+</tr>
+<tr>
+<td>XFAIL</td>
+<td><code>x</code></td>
+<td>Failed as expected</td>
+</tr>
+<tr>
+<td>XPASS</td>
+<td><code>X</code></td>
+<td>Passed unexpectedly — investigate</td>
+</tr>
+</tbody>
+</table>
+<p>The FAILED/ERROR distinction is diagnostically important: <code>FAILED</code> means the
+product may be broken; <code>ERROR</code> usually means your <em>setup</em> is broken and the
+product was never actually exercised.</p>
+<h2 id="8-test-structure-arrange-act-assert">8. Test structure — Arrange, Act, Assert<a class="headerlink" href="#8-test-structure-arrange-act-assert" title="Permanent link">&para;</a></h2>
+<p>Structure every test in three visible phases. It makes tests readable by people
+who didn't write them, which is the whole point.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_applying_valid_promo_reduces_order_total</span><span class="p">():</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>    <span class="c1"># Arrange — set up the state</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>    <span class="n">cart_total</span> <span class="o">=</span> <span class="mi">2000</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>    <span class="n">promo_code</span> <span class="o">=</span> <span class="s2">&quot;SAVE20&quot;</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>    <span class="n">expected_total</span> <span class="o">=</span> <span class="mi">1600</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>    <span class="c1"># Act — perform the single action under test</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>    <span class="n">actual_total</span> <span class="o">=</span> <span class="n">apply_promo</span><span class="p">(</span><span class="n">cart_total</span><span class="p">,</span> <span class="n">promo_code</span><span class="p">)</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>    <span class="c1"># Assert — verify the outcome</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>    <span class="k">assert</span> <span class="n">actual_total</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="n">expected_total</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="naming-tests">Naming tests<a class="headerlink" href="#naming-tests" title="Permanent link">&para;</a></h3>
+<p>The test name is the failure message that appears in every report. Make it a
+sentence describing the behaviour and condition:</p>
+<table>
+<thead>
+<tr>
+<th>Poor</th>
+<th>Good</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test_login</code></td>
+<td><code>test_login_succeeds_with_valid_credentials</code></td>
+</tr>
+<tr>
+<td><code>test_1</code></td>
+<td><code>test_login_fails_with_unregistered_email</code></td>
+</tr>
+<tr>
+<td><code>test_promo</code></td>
+<td><code>test_promo_rejected_when_order_below_minimum</code></td>
+</tr>
+<tr>
+<td><code>test_cart_stuff</code></td>
+<td><code>test_removing_last_item_empties_cart</code></td>
+</tr>
+</tbody>
+</table>
+<p>When CI mails "1 failed:
+<code>test_promo_rejected_when_order_below_minimum</code>", everyone knows what broke
+before opening anything.</p>
+<h3 id="the-first-properties">The FIRST properties<a class="headerlink" href="#the-first-properties" title="Permanent link">&para;</a></h3>
+<p>Good tests are:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fast</strong></td>
+<td>Milliseconds, so people run them constantly</td>
+</tr>
+<tr>
+<td><strong>Independent</strong></td>
+<td>Any order, any subset, same result</td>
+</tr>
+<tr>
+<td><strong>Repeatable</strong></td>
+<td>Same result on any machine, any day</td>
+</tr>
+<tr>
+<td><strong>Self-validating</strong></td>
+<td>Pass/fail, no human reading output</td>
+</tr>
+<tr>
+<td><strong>Timely</strong></td>
+<td>Written with (or before) the code</td>
+</tr>
+</tbody>
+</table>
+<p>Independence is the one that breaks first in a real suite. If <code>test_b</code> only
+passes because <code>test_a</code> created a user, then running <code>pytest -k test_b</code> fails,
+parallel execution fails, and a re-run after a fix fails. Fixtures (Module 8)
+are the mechanism that prevents this.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>Write <code>tests/test_shipping.py</code> for this specification, using pure pytest:</p>
+<blockquote>
+<p><em>Orders under ₹500: ₹60 shipping. ₹500–₹1,999: ₹30. ₹2,000 and above: free.
+Order values must be positive numbers; anything else raises <code>ValueError</code>.
+Orders above ₹1,00,000 raise <code>ValueError("Order exceeds maximum value")</code>.</em></p>
+</blockquote>
+<ol>
+<li>Write the <code>calculate_shipping(order_total)</code> function that satisfies it.</li>
+<li>Write <strong>at least 12 tests</strong> covering the boundary values you derived in
+   Module 5 (499/500/501, 1999/2000/2001, 99999/100000/100001) plus mid-partition
+   values.</li>
+<li>Write <strong>three <code>pytest.raises</code> tests</strong> for the error cases, asserting on both
+   the exception type and the message.</li>
+<li>Mark the three most critical tests <code>@pytest.mark.smoke</code> and verify
+   <code>pytest -m smoke</code> selects exactly those three.</li>
+<li>Add an <code>xfail(strict=True)</code> test for a rule that isn't implemented yet —
+   free shipping for Gold members regardless of order value — and confirm it
+   reports <code>XFAIL</code>. Then implement the rule and confirm the run turns into a
+   failing <code>XPASS</code>, forcing you to remove the marker.</li>
+<li>Deliberately break one test and capture the failure output. Then run
+   <code>pytest --lf</code> and confirm only that test re-runs.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

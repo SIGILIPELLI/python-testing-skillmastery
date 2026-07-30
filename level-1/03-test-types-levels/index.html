@@ -1,0 +1,3023 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A structured, module-wise software testing training program using Python — manual QA fundamentals through advanced test automation.">
+      
+      
+      
+        <link rel="canonical" href="https://sigilipelli.github.io/python-testing-mastery-path/level-1/03-test-types-levels/">
+      
+      
+        <link rel="prev" href="../02-test-case-design/">
+      
+      
+        <link rel="next" href="../04-defect-lifecycle/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>03 · Test Types & Levels - Python Testing Mastery Path</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Python Testing Mastery Path">
+  <meta property="og:title" content="03 · Test Types & Levels">
+  <meta property="og:description" content="A structured, module-wise software testing training program using Python — manual QA fundamentals, pytest, Selenium and automation, from entry level to master level.">
+  <meta property="og:url" content="https://sigilipelli.github.io/python-testing-mastery-path/level-1/03-test-types-levels/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="03 · Test Types & Levels">
+  <meta name="twitter:description" content="A structured, module-wise software testing training program using Python — manual QA fundamentals, pytest, Selenium and automation, from entry level to master level.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9440969811959397"
+     crossorigin="anonymous"></script>
+
+  <!-- Mastery Path premium gate: homepage + Level 1 stay free and crawlable;
+       Levels 2-4 require a signed-in account. -->
+  <script>
+    (function () {
+      if (!/\/level-[234]\//.test(window.location.pathname)) return;
+
+      var root = document.documentElement;
+      root.style.visibility = "hidden";
+
+      function reveal() { root.style.visibility = "visible"; }
+      function toLogin() {
+        window.location.replace(
+          "/login.html?redirect=" + encodeURIComponent(window.location.href)
+        );
+      }
+
+      var settled = false;
+      window.addEventListener("mastery-auth-ready", function (e) {
+        if (settled) return;
+        settled = true;
+        if (e.detail && e.detail.user) { reveal(); } else { toLogin(); }
+      }, { once: true });
+
+      // Fail closed: if Firebase never loads (blocked/offline), send to login
+      // rather than leaving a blank page or silently exposing the content.
+      setTimeout(function () {
+        if (!settled) { settled = true; toLogin(); }
+      }, 8000);
+    })();
+  </script>
+  <script type="module" src="/mastery-auth.js"></script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#03-test-types-levels" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Python Testing Mastery Path" class="md-header__button md-logo" aria-label="Python Testing Mastery Path" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python Testing Mastery Path
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              03 · Test Types & Levels
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SIGILIPELLI/python-testing-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    python-testing-mastery-path
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../privacy/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Privacy Policy
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 1 · Entry
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../level-2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 2 · Intermediate
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../level-3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 3 · Advanced
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../level-4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 4 · Master
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Python Testing Mastery Path" class="md-nav__button md-logo" aria-label="Python Testing Mastery Path" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Python Testing Mastery Path
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SIGILIPELLI/python-testing-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    python-testing-mastery-path
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../privacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Privacy Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 1 · Entry
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 1 · Entry
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-what-is-software-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · What Is Software Testing?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-test-case-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Test Case Design & Documentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Test Types & Levels
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Test Types & Levels
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-test-levels-how-much-of-the-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Test levels — how much of the system
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Test levels — how much of the system">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unit-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unit testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acceptance-testing-uat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acceptance testing / UAT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-test-pyramid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The test pyramid
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-functional-vs-non-functional-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Functional vs non-functional testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Functional vs non-functional testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functional-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functional types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-functional-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-functional types
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-smoke-vs-sanity-vs-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Smoke vs sanity vs regression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-retesting-vs-regression-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Retesting vs regression testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-black-box-white-box-grey-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Black box, white box, grey box
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-choosing-what-to-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Choosing what to run
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-defect-lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Defect Lifecycle & Bug Reporting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-manual-testing-practice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Manual Testing in Practice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-python-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Python Setup for Testers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-pytest-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · pytest Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-fixtures-parametrize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · pytest Fixtures & Parametrize
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-selenium-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Selenium WebDriver Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-project-test-suite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Test Plan + Automated Suite
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../level-2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 2 · Intermediate
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 2 · Intermediate
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/01-page-object-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Page Object Model in Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/02-selenium-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Selenium Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/03-api-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · API Testing with requests + pytest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/04-mocking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Mocking with unittest.mock
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/05-test-data-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Test Data Management & Factories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/06-pytest-config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · pytest Plugins & Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/07-reporting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Reporting (pytest-html, Allure)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/08-parallel-execution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Parallel Execution (pytest-xdist)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/09-cross-browser-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Cross-Browser Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-2/10-project-pom-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — POM Framework with API Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../level-3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 3 · Advanced
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 3 · Advanced
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/01-playwright/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Playwright for Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/02-bdd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · BDD with pytest-bdd / Behave
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/03-robot-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Robot Framework Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/04-cicd-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · CI/CD Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/05-property-based-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Property-Based Testing with Hypothesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/06-performance-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Performance Testing with Locust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/07-mobile-testing-appium/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Mobile Testing with Appium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/08-database-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Database Testing from Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/09-flaky-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Flaky Test Diagnosis & Stabilization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/10-project-playwright-bdd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Playwright + BDD in CI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../level-4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 4 · Master
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 4 · Master
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/01-test-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Test Architecture at Scale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/02-shift-left-continuous-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Shift-Left & Continuous Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/03-contract-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Contract Testing (Pact)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/04-security-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Security Testing Basics for QA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/05-test-metrics-quality-gates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Test Metrics & Quality Gates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/06-containerized-environments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Containerized Test Environments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/07-ai-assisted-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · AI-Assisted Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/08-inhouse-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Building an In-House Test Framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/09-qa-leadership-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · QA Leadership & Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/10-capstone-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Capstone — Production-Grade Framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-test-levels-how-much-of-the-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Test levels — how much of the system
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Test levels — how much of the system">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unit-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unit testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acceptance-testing-uat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acceptance testing / UAT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-test-pyramid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The test pyramid
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-functional-vs-non-functional-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Functional vs non-functional testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Functional vs non-functional testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functional-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functional types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-functional-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-functional types
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-smoke-vs-sanity-vs-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Smoke vs sanity vs regression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-retesting-vs-regression-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Retesting vs regression testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-black-box-white-box-grey-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Black box, white box, grey box
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-choosing-what-to-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Choosing what to run
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="03-test-types-levels">03 · Test Types &amp; Levels<a class="headerlink" href="#03-test-types-levels" title="Permanent link">&para;</a></h1>
+<p>"Testing" is not one activity. Ask a team what they test and you'll get answers
+that operate at different altitudes and answer different questions. This module
+gives you the two axes that organise all of it: <strong>levels</strong> (how much of the
+system is under test) and <strong>types</strong> (what quality attribute you're examining).</p>
+<h2 id="1-test-levels-how-much-of-the-system">1. Test levels — how much of the system<a class="headerlink" href="#1-test-levels-how-much-of-the-system" title="Permanent link">&para;</a></h2>
+<p>Levels are stacked. Each one assumes the level below it did its job.</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Unit under test</th>
+<th>Who usually writes it</th>
+<th>Speed</th>
+<th>Environment</th>
+<th>Finds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unit</strong></td>
+<td>One function/class in isolation</td>
+<td>Developers</td>
+<td>Milliseconds</td>
+<td>Local / CI</td>
+<td>Logic errors, edge cases in a single component</td>
+</tr>
+<tr>
+<td><strong>Integration</strong></td>
+<td>Two or more components talking</td>
+<td>Developers + QA</td>
+<td>Seconds</td>
+<td>CI with test doubles or real deps</td>
+<td>Interface mismatches, wrong data contracts</td>
+</tr>
+<tr>
+<td><strong>System</strong></td>
+<td>The whole assembled application</td>
+<td>QA</td>
+<td>Seconds to minutes</td>
+<td>Dedicated test environment</td>
+<td>End-to-end flow failures, config problems</td>
+</tr>
+<tr>
+<td><strong>Acceptance (UAT)</strong></td>
+<td>The whole application, from business perspective</td>
+<td>Business users / product owner</td>
+<td>Minutes to hours</td>
+<td>Staging / pre-prod</td>
+<td>"It works, but it's not what we asked for"</td>
+</tr>
+</tbody>
+</table>
+<h3 id="unit-testing">Unit testing<a class="headerlink" href="#unit-testing" title="Permanent link">&para;</a></h3>
+<p>Tests one thing with its dependencies replaced by stubs or mocks. If it touches
+a database, a network, or the filesystem, it's usually not a unit test.</p>
+<p>Characteristics: fast, deterministic, numerous (hundreds to thousands), owned by
+whoever wrote the code. This is what you'll write with pytest in Module 7.</p>
+<h3 id="integration-testing">Integration testing<a class="headerlink" href="#integration-testing" title="Permanent link">&para;</a></h3>
+<p>Verifies the <em>seams</em>. Two components can each be perfectly correct and still
+fail together — one sends a date as <code>DD/MM/YYYY</code>, the other parses <code>MM/DD/YYYY</code>;
+one returns <code>null</code>, the other doesn't expect it.</p>
+<p>Two approaches:</p>
+<ul>
+<li><strong>Big bang</strong> — assemble everything and test. Cheap to organise, miserable to
+  debug, because a failure could originate anywhere.</li>
+<li><strong>Incremental</strong> — add one component at a time. <em>Top-down</em> uses <strong>stubs</strong> to
+  stand in for not-yet-integrated lower components; <em>bottom-up</em> uses <strong>drivers</strong>
+  to invoke lower components before the upper ones exist. Slower to set up, far
+  faster to diagnose.</li>
+</ul>
+<h3 id="system-testing">System testing<a class="headerlink" href="#system-testing" title="Permanent link">&para;</a></h3>
+<p>The first level where you test the product as the user will meet it: real
+application, real configuration, realistic data. Both functional and
+non-functional types (section 3) are exercised here.</p>
+<h3 id="acceptance-testing-uat">Acceptance testing / UAT<a class="headerlink" href="#acceptance-testing-uat" title="Permanent link">&para;</a></h3>
+<p>Run by or on behalf of the business to decide whether to accept the release.
+Crucially, UAT tests against <strong>business need</strong>, not the specification — which is
+why it catches "you built exactly what the document said, and the document was
+wrong." Related forms:</p>
+<ul>
+<li><strong>Alpha testing</strong> — by internal staff, in a controlled environment.</li>
+<li><strong>Beta testing</strong> — by real customers, in their own environment.</li>
+<li><strong>Contract / regulatory acceptance</strong> — verifying contractual or legal criteria.</li>
+<li><strong>Operational acceptance (OAT)</strong> — can operations actually run this thing?
+  Backup, restore, failover, monitoring, runbooks.</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">The V-Model view</p>
+<p>Each development stage on the left has a matching test level on the right:
+requirements ↔ acceptance testing, system design ↔ system testing, detailed
+design ↔ integration testing, code ↔ unit testing. It's a useful mental
+model even on Agile teams: it reminds you <em>which artefact</em> each level is
+validating against.</p>
+</div>
+<h2 id="2-the-test-pyramid">2. The test pyramid<a class="headerlink" href="#2-the-test-pyramid" title="Permanent link">&para;</a></h2>
+<p>Levels have an ideal proportion, usually drawn as a pyramid:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>            /\
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>           /  \        End-to-end / UI tests   (few, slow, brittle, high confidence)
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>          /----\
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>         /      \      Integration / API tests (some, moderate speed)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        /--------\
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>       /          \    Unit tests              (many, fast, cheap, precise)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>      /____________\
+</code></pre></div>
+<p>The rationale is economic. A unit test that fails points at one function. An
+end-to-end test that fails could mean anything from a genuine bug to a slow
+network to a changed CSS class. Push checks as far down as they can meaningfully
+go, and reserve the top of the pyramid for a small set of critical user journeys.</p>
+<div class="admonition warning">
+<p class="admonition-title">The ice-cream cone</p>
+<p>The common anti-pattern is the inverted pyramid: hundreds of UI tests, few
+unit tests. Symptoms are a suite that takes hours, fails randomly, and that
+everyone has learned to re-run rather than trust. If you inherit one, the
+fix is not "add more UI tests."</p>
+</div>
+<h2 id="3-functional-vs-non-functional-testing">3. Functional vs non-functional testing<a class="headerlink" href="#3-functional-vs-non-functional-testing" title="Permanent link">&para;</a></h2>
+<p>The second axis: <strong>what quality attribute</strong> are you examining?</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Functional</th>
+<th>Non-functional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Question</td>
+<td><em>What</em> does the system do?</td>
+<td><em>How well</em> does it do it?</td>
+</tr>
+<tr>
+<td>Derived from</td>
+<td>Requirements, user stories</td>
+<td>Quality attributes, SLAs, standards</td>
+</tr>
+<tr>
+<td>Pass criteria</td>
+<td>Behaviour matches expectation</td>
+<td>Measured value meets a threshold</td>
+</tr>
+<tr>
+<td>Example</td>
+<td>"Transfer moves ₹500 from A to B"</td>
+<td>"Transfer completes in under 2 s at 500 concurrent users"</td>
+</tr>
+</tbody>
+</table>
+<h3 id="functional-types">Functional types<a class="headerlink" href="#functional-types" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Verifies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Smoke</strong></td>
+<td>The build is stable enough to test at all</td>
+</tr>
+<tr>
+<td><strong>Sanity</strong></td>
+<td>A specific fix or change works, narrowly</td>
+</tr>
+<tr>
+<td><strong>Regression</strong></td>
+<td>Existing functionality still works after a change</td>
+</tr>
+<tr>
+<td><strong>Integration</strong></td>
+<td>Components work together</td>
+</tr>
+<tr>
+<td><strong>UI/GUI</strong></td>
+<td>Screens render and behave correctly</td>
+</tr>
+<tr>
+<td><strong>Localisation / i18n</strong></td>
+<td>Language, currency, date formats, RTL layout</td>
+</tr>
+<tr>
+<td><strong>Compatibility</strong></td>
+<td>Browsers, OS versions, devices, screen sizes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="non-functional-types">Non-functional types<a class="headerlink" href="#non-functional-types" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Verifies</th>
+<th>Typical tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Performance</strong></td>
+<td>Response time, throughput under expected load</td>
+<td>Locust, JMeter, k6</td>
+</tr>
+<tr>
+<td><strong>Load</strong></td>
+<td>Behaviour at expected peak load</td>
+<td>Locust</td>
+</tr>
+<tr>
+<td><strong>Stress</strong></td>
+<td>Behaviour <em>beyond</em> capacity, and how it recovers</td>
+<td>Locust</td>
+</tr>
+<tr>
+<td><strong>Soak / endurance</strong></td>
+<td>Stability over hours — memory leaks, connection exhaustion</td>
+<td>Locust</td>
+</tr>
+<tr>
+<td><strong>Spike</strong></td>
+<td>Sudden traffic surge handling</td>
+<td>Locust</td>
+</tr>
+<tr>
+<td><strong>Scalability</strong></td>
+<td>Does adding resources actually add capacity?</td>
+<td>Cloud load tooling</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>Auth, authorisation, injection, data exposure</td>
+<td>OWASP ZAP, Burp</td>
+</tr>
+<tr>
+<td><strong>Usability</strong></td>
+<td>Can a real user complete the task without help?</td>
+<td>Moderated sessions</td>
+</tr>
+<tr>
+<td><strong>Accessibility</strong></td>
+<td>WCAG conformance, screen readers, keyboard nav</td>
+<td>axe, Lighthouse</td>
+</tr>
+<tr>
+<td><strong>Reliability / availability</strong></td>
+<td>Uptime, failover, recovery</td>
+<td>Chaos tooling</td>
+</tr>
+<tr>
+<td><strong>Compliance</strong></td>
+<td>GDPR, HIPAA, PCI-DSS, regional requirements</td>
+<td>Audit checklists</td>
+</tr>
+</tbody>
+</table>
+<p>You'll meet performance testing with Locust in Level 3 and security basics in
+Level 4.</p>
+<h2 id="4-smoke-vs-sanity-vs-regression">4. Smoke vs sanity vs regression<a class="headerlink" href="#4-smoke-vs-sanity-vs-regression" title="Permanent link">&para;</a></h2>
+<p>These three get mixed up in nearly every interview, so be precise.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Smoke</th>
+<th>Sanity</th>
+<th>Regression</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Purpose</strong></td>
+<td>Is the build testable?</td>
+<td>Did this specific fix work?</td>
+<td>Did anything else break?</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Wide, very shallow</td>
+<td>Narrow, deeper</td>
+<td>Wide and deep</td>
+</tr>
+<tr>
+<td><strong>When</strong></td>
+<td>Immediately on receiving a build</td>
+<td>After a bug fix or small change</td>
+<td>After any change, before release</td>
+</tr>
+<tr>
+<td><strong>Documented?</strong></td>
+<td>Yes, a fixed short checklist</td>
+<td>Often ad-hoc, unscripted</td>
+<td>Yes, a maintained suite</td>
+</tr>
+<tr>
+<td><strong>Duration</strong></td>
+<td>5–15 minutes</td>
+<td>15–30 minutes</td>
+<td>Hours (manual) / minutes (automated)</td>
+</tr>
+<tr>
+<td><strong>On failure</strong></td>
+<td><strong>Reject the build</strong> — don't waste a testing cycle</td>
+<td>Reopen the defect</td>
+<td>Log a regression defect, usually high priority</td>
+</tr>
+<tr>
+<td><strong>Automate?</strong></td>
+<td>Always</td>
+<td>Rarely</td>
+<td>Always, as far as possible</td>
+</tr>
+</tbody>
+</table>
+<p>A concrete example. A build arrives claiming to fix "discount not applied to
+sale items."</p>
+<ul>
+<li><strong>Smoke:</strong> app loads, login works, product page renders, item adds to cart,
+  checkout page opens, payment page opens. Six checks, ten minutes. If checkout
+  is broken, reject the build — there's no point testing the discount fix in an
+  app that can't check out.</li>
+<li><strong>Sanity:</strong> apply a discount to a sale item; try two sale items; try a sale
+  item plus a full-price item. Narrow, focused on the change.</li>
+<li><strong>Regression:</strong> the full cart and checkout suite — discounts on non-sale items,
+  promo codes, tax calculation, shipping thresholds, currency, order history —
+  because a change to discount logic can plausibly break any of them.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">The one-sentence distinctions</p>
+<p>Smoke = <em>"is it worth testing?"</em> · Sanity = <em>"is the fix right?"</em> ·
+Regression = <em>"is everything else still right?"</em></p>
+</div>
+<h2 id="5-retesting-vs-regression-testing">5. Retesting vs regression testing<a class="headerlink" href="#5-retesting-vs-regression-testing" title="Permanent link">&para;</a></h2>
+<p>Another pair that gets conflated:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Retesting (confirmation testing)</th>
+<th>Regression testing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Target</td>
+<td>The exact failed test case</td>
+<td>Other, previously passing cases</td>
+</tr>
+<tr>
+<td>Trigger</td>
+<td>A defect is marked fixed</td>
+<td>Any code change</td>
+</tr>
+<tr>
+<td>Uses the defect's steps?</td>
+<td>Yes, exactly</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Can it be automated?</td>
+<td>Yes, but often run manually once</td>
+<td>Yes — the prime automation candidate</td>
+</tr>
+<tr>
+<td>Skippable?</td>
+<td>Never</td>
+<td>Only by explicit risk acceptance</td>
+</tr>
+</tbody>
+</table>
+<p>Both happen after a fix. Retest first (does the fix work?), then regress (did the
+fix break a neighbour?).</p>
+<h2 id="6-black-box-white-box-grey-box">6. Black box, white box, grey box<a class="headerlink" href="#6-black-box-white-box-grey-box" title="Permanent link">&para;</a></h2>
+<p>A third axis: how much internal knowledge do you use?</p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Knowledge of internals</th>
+<th>Who</th>
+<th>Techniques</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Black box</strong></td>
+<td>None — tests behaviour through the interface</td>
+<td>QA, business users</td>
+<td>Equivalence partitioning, boundary value analysis, decision tables, state transition (Module 5)</td>
+</tr>
+<tr>
+<td><strong>White box</strong></td>
+<td>Full — tests code paths</td>
+<td>Developers</td>
+<td>Statement, branch, path, condition coverage</td>
+</tr>
+<tr>
+<td><strong>Grey box</strong></td>
+<td>Partial — knows architecture, DB schema, API contracts</td>
+<td>Experienced QA</td>
+<td>Integration and API testing, DB verification</td>
+</tr>
+</tbody>
+</table>
+<p>White-box <strong>coverage criteria</strong>, worth knowing by name:</p>
+<ul>
+<li><strong>Statement coverage</strong> — every line executed at least once. Weakest.</li>
+<li><strong>Branch/decision coverage</strong> — every <code>if</code> taken both ways.</li>
+<li><strong>Condition coverage</strong> — every boolean sub-expression evaluated both ways.</li>
+<li><strong>Path coverage</strong> — every route through the function. Strongest, and
+  combinatorially impossible on anything real.</li>
+</ul>
+<p>100% statement coverage is a much weaker guarantee than it sounds: code with an
+untested <code>else</code> branch can still hit 100% statement coverage if the <code>if</code> body
+contains all the statements. Coverage tells you what was <em>executed</em>, never what
+was <em>verified</em>.</p>
+<h2 id="7-choosing-what-to-run">7. Choosing what to run<a class="headerlink" href="#7-choosing-what-to-run" title="Permanent link">&para;</a></h2>
+<p>You will never run everything. A workable default for a two-week sprint release:</p>
+<table>
+<thead>
+<tr>
+<th>Trigger</th>
+<th>What runs</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Every commit</td>
+<td>Unit tests + linting</td>
+<td>CI, automated, &lt; 5 min</td>
+</tr>
+<tr>
+<td>Every merge to main</td>
+<td>Unit + integration + API tests</td>
+<td>CI, automated, &lt; 15 min</td>
+</tr>
+<tr>
+<td>Every deployment to test</td>
+<td>Smoke suite</td>
+<td>CI, automated, &lt; 5 min</td>
+</tr>
+<tr>
+<td>Every bug fix</td>
+<td>Retest + sanity</td>
+<td>Manual or automated</td>
+</tr>
+<tr>
+<td>Nightly</td>
+<td>Full automated regression</td>
+<td>CI, automated, any duration</td>
+</tr>
+<tr>
+<td>Before release</td>
+<td>Full regression + exploratory + non-functional spot checks</td>
+<td>Mixed</td>
+</tr>
+<tr>
+<td>After release</td>
+<td>Production smoke</td>
+<td>Automated against prod</td>
+</tr>
+</tbody>
+</table>
+<h2 id="summary-table">Summary table<a class="headerlink" href="#summary-table" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Axis</th>
+<th>Options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Levels</strong></td>
+<td>Unit → Integration → System → Acceptance</td>
+</tr>
+<tr>
+<td><strong>Functional types</strong></td>
+<td>Smoke, sanity, regression, integration, UI, localisation, compatibility</td>
+</tr>
+<tr>
+<td><strong>Non-functional types</strong></td>
+<td>Performance, load, stress, soak, security, usability, accessibility, reliability, compliance</td>
+</tr>
+<tr>
+<td><strong>Knowledge</strong></td>
+<td>Black box, grey box, white box</td>
+</tr>
+<tr>
+<td><strong>Execution</strong></td>
+<td>Manual, automated</td>
+</tr>
+<tr>
+<td><strong>Static vs dynamic</strong></td>
+<td>Reviews &amp; analysis vs running the software</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>For an online food-delivery application (browse restaurants, add items to cart,
+apply coupon, pay, track order):</p>
+<ol>
+<li>Write <strong>one test case at each of the four levels</strong> for the "apply coupon"
+   feature. Make it obvious from the case itself which level it belongs to —
+   what's mocked, what's real, who runs it.</li>
+<li>Design a <strong>10-item smoke suite</strong> for this application. Justify why each item
+   is in it, and name two things you deliberately left out despite being
+   important.</li>
+<li>The team fixes "order tracking map does not refresh." Write the <strong>sanity
+   checks</strong> (3–5 items) and then list <strong>eight regression areas</strong> you'd cover,
+   ranked by risk, with a one-line justification for the top three.</li>
+<li>List <strong>five non-functional requirements</strong> for this app, each with a
+   <strong>measurable threshold</strong> (e.g. "search results render in under 1.5 s at the
+   95th percentile with 2,000 concurrent users"). Vague thresholds don't count.</li>
+<li>The suite currently has 15 unit tests, 4 API tests and 120 UI tests. Diagnose
+   the shape, predict three symptoms the team is probably experiencing, and
+   propose a rebalancing plan.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
