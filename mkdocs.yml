@@ -62,8 +62,19 @@ nav:
       - "08 · pytest Fixtures & Parametrize": level-1/08-fixtures-parametrize.md
       - "09 · Selenium WebDriver Basics": level-1/09-selenium-basics.md
       - "10 · Project — Test Plan + Automated Suite": level-1/10-project-test-suite.md
+  - "Level 2 · Intermediate":
+      - Overview: level-2/index.md
+      - "01 · Page Object Model in Python": level-2/01-page-object-model.md
+      - "02 · Selenium Advanced": level-2/02-selenium-advanced.md
+      - "03 · API Testing with requests + pytest": level-2/03-api-testing.md
+      - "04 · Mocking with unittest.mock": level-2/04-mocking.md
+      - "05 · Test Data Management & Factories": level-2/05-test-data-management.md
+      - "06 · pytest Plugins & Configuration": level-2/06-pytest-config.md
+      - "07 · Reporting (pytest-html, Allure)": level-2/07-reporting.md
+      - "08 · Parallel Execution (pytest-xdist)": level-2/08-parallel-execution.md
+      - "09 · Cross-Browser Testing": level-2/09-cross-browser-testing.md
+      - "10 · Project — POM Framework with API Tests": level-2/10-project-pom-framework.md
 # --- auto-pruned stub levels (see AdSense low-value-content fix) ---
 exclude_docs: |
-  level-2/*.md
   level-3/*.md
   level-4/*.md
