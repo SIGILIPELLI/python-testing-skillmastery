@@ -17,8 +17,8 @@ level.
 |-------|-------|---------|
 | [Level 1 · Entry](level-1/index.md) | Manual QA foundations + first automation | 9 topics + 1 project |
 | [Level 2 · Intermediate](level-2/index.md) | Framework design, API testing, reporting | 9 topics + 1 project |
-| Level 3 · Advanced (coming soon) | Playwright, BDD, CI/CD, performance | 9 topics + 1 project |
-| Level 4 · Master (coming soon) | Test architecture, quality gates, strategy | 9 topics + 1 capstone |
+| [Level 3 · Advanced](level-3/index.md) | Playwright, BDD, CI/CD, performance | 9 topics + 1 project |
+| [Level 4 · Master](level-4/index.md) | Test architecture, quality gates, strategy | 9 topics + 1 capstone |
 
 ## Who this is for
 
